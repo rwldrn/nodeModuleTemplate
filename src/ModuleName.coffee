@@ -10,5 +10,5 @@ ModuleName = () ->
 module.exports = ModuleName if isNode
     
 ModuleName.hello = (world) ->
-    moduleName.hellow(world)
+    moduleName.hello(world)
 
