@@ -13,6 +13,15 @@ using namespace v8;
 using namespace std;
 
 
+// Convert a JavaScript string to a std::string.  To not bother too
+// much with string encodings we just use ascii.
+string ObjectToString(Local<Value> value) {
+  String::Utf8Value utf8_value(value);
+  return string(*utf8_value);
+}
+
+
+
 int GetArgumentIntValue ( const Arguments& args, int argNum, int &value )
 {
     if (args[argNum]->IsNumber())
@@ -20,6 +29,7 @@ int GetArgumentIntValue ( const Arguments& args, int argNum, int &value )
         value = args[argNum]->Int32Value();
     } 
     else {
+        cout << "GetArgumentIntValue arg " << ObjectToString(args[argNum]) << " not an integer\n";
         return PROCESS_FAIL;
     }
     return PROCESS_OK;
@@ -33,8 +43,7 @@ int GetArgumentDoubleValue ( const Arguments& args, int argNum, double &value )
         value = args[argNum]->NumberValue();
     } 
     else {
-        v8::String::Utf8Value param1(args[argNum]->ToString());
-        cout << "GetArgumentDoubleValue arg " << std::string(*param1) << " not a number\n";
+        cout << "GetArgumentDoubleValue arg " << ObjectToString(args[argNum]) << " not a number\n";
         return PROCESS_FAIL;
     }
     return PROCESS_OK;
@@ -45,12 +54,10 @@ int GetArgumentStringValue ( const Arguments& args, int argNum, string &value)
 {
     if (args[argNum]->IsString())
     {
-        // http://stackoverflow.com/a/10255816/51700
-        v8::String::Utf8Value param1(args[argNum]->ToString());
-
-        value = std::string(*param1);    
+        value = ObjectToString(args[argNum]);    
     } 
     else {
+        cout << "GetArgumentStringValue arg " << ObjectToString(args[argNum]) << " not a string\n";
         return PROCESS_FAIL;
     }
     return PROCESS_OK;
