@@ -29,7 +29,8 @@ int GetArgumentIntValue ( const Arguments& args, int argNum, int &value )
         value = args[argNum]->Int32Value();
     } 
     else {
-        cout << "GetArgumentIntValue arg " << ObjectToString(args[argNum]) << " not an integer\n";
+        string emsg("GetArgumentIntValue arg " + ObjectToString(args[argNum]) + " not an integer");
+        ThrowException(Exception::TypeError(String::New(emsg.c_str())));
         return PROCESS_FAIL;
     }
     return PROCESS_OK;
@@ -43,7 +44,8 @@ int GetArgumentDoubleValue ( const Arguments& args, int argNum, double &value )
         value = args[argNum]->NumberValue();
     } 
     else {
-        cout << "GetArgumentDoubleValue arg " << ObjectToString(args[argNum]) << " not a number\n";
+        string emsg("GetArgumentDoubleValue arg " + ObjectToString(args[argNum]) + " not an number");
+        ThrowException(Exception::TypeError(String::New(emsg.c_str())));
         return PROCESS_FAIL;
     }
     return PROCESS_OK;
@@ -57,7 +59,8 @@ int GetArgumentStringValue ( const Arguments& args, int argNum, string &value)
         value = ObjectToString(args[argNum]);    
     } 
     else {
-        cout << "GetArgumentStringValue arg " << ObjectToString(args[argNum]) << " not a string\n";
+        string emsg("GetArgumentStringValue arg " + ObjectToString(args[argNum]) + " not an string");
+        ThrowException(Exception::TypeError(String::New(emsg.c_str())));
         return PROCESS_FAIL;
     }
     return PROCESS_OK;
