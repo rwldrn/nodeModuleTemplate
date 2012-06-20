@@ -9,7 +9,7 @@
 
 using namespace std;
 
-string hello( const string &val ) {
+string execute_hello( const string &val ) {
     return string("Hello node, coffeescript and c++ ") + val;
 }
 

@@ -70,17 +70,15 @@ int GetArgumentStringValue ( const Arguments& args, int argNum, string &value)
 static Handle<Value> hello(const Arguments& args)
 {
     if (args.Length() < 1) {
+        ThrowException(Exception::TypeError(String::New("ModuleName::hello invalid number of arguments, expect 1")));
         return Number::New(PROCESS_FAIL);
     }
     int targ=0;
     string val;
 
     int status = GetArgumentStringValue ( args, targ++, val);
-    if (status == PROCESS_FAIL) {
-        return String::New("PROCESS FAIL");
-    }
 
-    string out = hello(val);
+    string out = execute_hello(val);
 
     return String::New(out.c_str());
 }
