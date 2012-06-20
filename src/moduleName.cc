@@ -84,11 +84,17 @@ static Handle<Value> hello(const Arguments& args)
 
 
 
+#ifdef _MODULE_NAME_NODE_MODULE
+
 extern "C" {
   static void init(Handle<Object> target)
   {
+      HandleScope scope;
+      cout << "_MODULE_NAME_NODE_MODULE is defined " << endl;
       NODE_SET_METHOD(target, "hello", hello);
   }
 
   NODE_MODULE(moduleName, init)
 }
+
+#endif
